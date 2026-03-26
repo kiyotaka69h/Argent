@@ -3,61 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuccessHub 💼</title>
+<title>SuccessHub Ultimate 💼</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+/* GLOBAL */
 body {
   margin:0;
-  font-family: Arial;
-  background:#0f172a;
-  color:white;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color:#fff;
+  transition: background 0.5s ease;
+  overflow-x:hidden;
 }
 
 /* HEADER */
 header {
-  background:#020617;
-  padding:15px;
+  background: #020617;
+  padding: 20px;
   text-align:center;
-  font-size:22px;
+  font-size:28px;
   font-weight:bold;
+  letter-spacing:1px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.5);
+  position: sticky;
+  top:0;
+  z-index: 100;
+}
+
+/* NAVIGATION */
+nav {
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  background: rgba(2,6,23,0.9);
+  padding:10px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.3);
+  position: sticky;
+  top:72px;
+  z-index: 99;
+}
+
+nav a {
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+  padding:5px 12px;
+  border-radius:6px;
+}
+
+nav a:hover {
+  background: #ffdd59;
+  color:#020617;
 }
 
 /* SEARCH */
 .search {
-  padding:10px;
+  padding: 15px;
   text-align:center;
 }
 
 .search input {
   width:90%;
-  padding:10px;
-  border-radius:8px;
+  max-width:500px;
+  padding:12px;
+  border-radius:10px;
   border:none;
   font-size:16px;
+  transition:0.3s;
+}
+
+.search input:focus {
+  outline:none;
+  box-shadow: 0 0 15px #ffdd59;
 }
 
 /* GRID */
 .container {
-  padding:15px;
+  padding:20px;
 }
 
 .grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+  transition: all 0.5s ease;
 }
 
 /* CARD */
 .card {
-  background:#1e293b;
-  padding:15px;
-  border-radius:12px;
+  background: linear-gradient(135deg, #2a5298, #1e3c72);
+  padding:20px;
+  border-radius:15px;
   cursor:pointer;
-  transition:0.3s;
+  transition: transform 0.4s, box-shadow 0.4s;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
 }
 
 .card:hover {
-  transform:scale(1.03);
+  transform: scale(1.05);
+  box-shadow:0 8px 25px rgba(0,0,0,0.6);
 }
 
 /* MODAL */
@@ -67,176 +115,164 @@ header {
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.95);
   display:none;
   overflow:auto;
+  animation: fadeIn 0.5s;
+  z-index:200;
 }
 
 .modal-content {
-  padding:20px;
-  max-width:800px;
+  padding:25px;
+  max-width:900px;
   margin:auto;
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.7);
+  animation: slideIn 0.5s;
 }
 
 .close {
-  font-size:30px;
+  font-size:32px;
   cursor:pointer;
   text-align:right;
+  color:#ffdd59;
+  transition:0.3s;
+}
+
+.close:hover {
+  transform: scale(1.2);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+@keyframes slideIn {
+  from {transform: translateY(-50px); opacity:0;}
+  to {transform: translateY(0); opacity:1;}
+}
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:15px;
+  background:#020617;
+  color:#ffdd59;
+  margin-top:20px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  nav {
+    flex-direction:column;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>💼 SuccessHub - Gagner & Travailler</header>
+<header>💼 SuccessHub Ultimate - Jobs & Argent</header>
 
-<div class="search">
-  <input type="text" placeholder="Rechercher..." onkeyup="search(this.value)">
+<nav>
+  <a href="#home" onclick="showPage('home')">Accueil</a>
+  <a href="#articles" onclick="showPage('articles')">Articles</a>
+  <a href="#conseils" onclick="showPage('conseils')">Conseils</a>
+  <a href="#contact" onclick="showPage('contact')">Contact</a>
+</nav>
+
+<!-- PAGES -->
+<div id="home" class="page" style="display:block; padding:20px; text-align:center;">
+  <h2>Bienvenue sur SuccessHub Ultimate!</h2>
+  <p>Découvrez des articles, conseils et méthodes pour gagner de l'argent et trouver un job rapidement.</p>
 </div>
 
-<div class="container">
-  <div class="grid" id="articles"></div>
+<div id="articles" class="page" style="display:none;">
+  <div class="search">
+    <input type="text" placeholder="Rechercher un article..." onkeyup="search(this.value)">
+  </div>
+  <div class="container">
+    <div class="grid" id="articlesGrid"></div>
+  </div>
 </div>
 
+<div id="conseils" class="page" style="display:none; padding:20px;">
+  <h2>Conseils et Astuces 💡</h2>
+  <ul>
+    <li>Être ponctuel et motivé</li>
+    <li>Apprendre vite et rester curieux</li>
+    <li>Créer plusieurs sources de revenus</li>
+    <li>Être proactif dans la recherche de job</li>
+    <li>Patience et discipline = clé du succès</li>
+  </ul>
+</div>
+
+<div id="contact" class="page" style="display:none; padding:20px;">
+  <h2>Contact 📧</h2>
+  <p>Tu peux me contacter via GitHub ou par email pour proposer des idées ou des articles.</p>
+</div>
+
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <div class="close" onclick="closeModal()">✖</div>
-    <h2 id="title"></h2>
-    <p id="content"></p>
+    <h2 id="modalTitle"></h2>
+    <p id="modalContent"></p>
   </div>
 </div>
 
 <script>
-
-// ARTICLES (tu peux en ajouter facilement)
-var data = [
-
-{
-title:"💸 7 façons de gagner de l'argent à 16 ans",
-content:`1. Baby-sitting 👶  
-2. Aider des voisins 🧹  
-3. Vendre des objets 📦  
-4. Créer du contenu 📱  
-5. Faire du montage vidéo  
-6. Aider dans des petits commerces  
-7. Donner des cours simples`
-},
-
-{
-title:"💼 Trouver un job en 24h (méthode)",
-content:`1. Va DIRECT dans les magasins  
-2. Parle au responsable  
-3. Sois poli et motivé  
-4. Demande s'ils recrutent  
-5. Fais 5 à 10 magasins dans la journée`
-},
-
-{
-title:"❌ 5 erreurs qui t'empêchent de trouver un travail",
-content:`1. Attendre chez toi  
-2. Ne pas parler aux gens  
-3. CV vide ou mal fait  
-4. Pas de motivation  
-5. Abandonner trop vite`
-},
-
-{
-title:"🏛️ Travailler dans le public",
-content:`- Police 👮  
-- Armée 🪖  
-- Hôpital 🏥  
-- Administration 🏢  
-👉 Nécessite souvent concours`
-},
-
-{
-title:"📱 Gagner de l'argent avec internet",
-content:`- YouTube  
-- TikTok  
-- Freelance  
-- Vente en ligne  
-👉 Demande patience`
-},
-
-{
-title:"⚡ Comment être meilleur au travail",
-content:`- Être ponctuel  
-- Être sérieux  
-- Apprendre vite  
-- Respecter les autres  
-👉 Ça te rend précieux`
-},
-
-{
-title:"💡 Comment se faire embaucher sans expérience",
-content:`- Être motivé  
-- Montrer que tu apprends vite  
-- Avoir une bonne attitude  
-- Être honnête`
-},
-
-{
-title:"🔥 Les jobs les plus faciles à trouver",
-content:`- Restauration 🍔  
-- Magasins 🏪  
-- Livraison 📦  
-- Ménage 🧹`
-},
-
-{
-title:"📊 Comment gagner plus d'argent",
-content:`- Apprendre une compétence  
-- Travailler plus intelligemment  
-- Avoir plusieurs revenus`
-},
-
-{
-title:"🧠 Mentalité pour réussir",
-content:`- Discipline  
-- Patience  
-- Travail  
-👉 C'est la clé`
-}
-
+// ARTICLES
+var articles = [
+{title:"💸 7 façons de gagner de l'argent à 16 ans", content:`1. Baby-sitting 👶<br>2. Aider des voisins 🧹<br>3. Vendre des objets 📦<br>4. Créer du contenu 📱<br>5. Montage vidéo<br>6. Aider dans des petits commerces<br>7. Donner des cours simples`},
+{title:"💼 Trouver un job en 24h", content:`1. Aller dans les magasins 🏪<br>2. Parler au responsable<br>3. Être motivé<br>4. Demander s'ils recrutent<br>5. Faire 5 à 10 magasins`},
+{title:"❌ 5 erreurs qui t'empêchent de trouver un travail", content:`1. Attendre chez soi<br>2. Ne pas parler aux gens<br>3. CV vide<br>4. Pas de motivation<br>5. Abandonner trop vite`},
+{title:"🏛️ Travailler dans le public", content:`- Police 👮<br>- Armée 🪖<br>- Hôpital 🏥<br>- Administration 🏢<br>👉 Nécessite souvent concours`},
+{title:"📱 Gagner de l'argent avec Internet", content:`- YouTube<br>- TikTok<br>- Freelance<br>- Vente en ligne<br>👉 Patience requise`},
+{title:"⚡ Comment être meilleur au travail", content:`- Être ponctuel<br>- Être sérieux<br>- Apprendre vite<br>- Respecter les autres`},
+{title:"💡 Se faire embaucher sans expérience", content:`- Être motivé<br>- Montrer que tu apprends vite<br>- Bonne attitude<br>- Être honnête`},
+{title:"🔥 Jobs faciles à trouver", content:`- Restauration 🍔<br>- Magasins 🏪<br>- Livraison 📦<br>- Ménage 🧹`},
+{title:"📊 Comment gagner plus d'argent", content:`- Apprendre une compétence<br>- Travailler intelligemment<br>- Avoir plusieurs revenus`},
+{title:"🧠 Mentalité pour réussir", content:`- Discipline<br>- Patience<br>- Travail<br>👉 C'est la clé`}
 ];
 
 // AFFICHER ARTICLES
-function display(list){
-  var container = document.getElementById("articles");
+function displayArticles(list){
+  var container = document.getElementById("articlesGrid");
   container.innerHTML = "";
-
   list.forEach((a,i)=>{
-    container.innerHTML += `
-      <div class="card" onclick="openArticle(${i})">
-        <h3>${a.title}</h3>
-      </div>
-    `;
+    container.innerHTML += `<div class="card" onclick="openModal(${i})"><h3>${a.title}</h3></div>`;
   });
 }
+displayArticles(articles);
 
-display(data);
-
-// OUVRIR ARTICLE
-function openArticle(i){
-  document.getElementById("modal").style.display = "block";
-  document.getElementById("title").innerText = data[i].title;
-  document.getElementById("content").innerText = data[i].content;
+// MODAL
+function openModal(i){
+  document.getElementById("modal").style.display="block";
+  document.getElementById("modalTitle").innerHTML = articles[i].title;
+  document.getElementById("modalContent").innerHTML = articles[i].content;
 }
+function closeModal(){document.getElementById("modal").style.display="none";}
 
-// FERMER
-function closeModal(){
-  document.getElementById("modal").style.display = "none";
-}
-
-// SEARCH
+// RECHERCHE
 function search(text){
-  var filtered = data.filter(a =>
-    a.title.toLowerCase().includes(text.toLowerCase())
-  );
-  display(filtered);
+  var filtered = articles.filter(a=>a.title.toLowerCase().includes(text.toLowerCase()));
+  displayArticles(filtered);
 }
 
+// NAVIGATION
+function showPage(page){
+  var pages = document.getElementsByClassName('page');
+  for(var i=0;i<pages.length;i++){pages[i].style.display='none';}
+  document.getElementById(page).style.display='block';
+}
 </script>
 
+<footer>© 2026 SuccessHub Ultimate - Tous droits réservés</footer>
 </body>
   </html>
