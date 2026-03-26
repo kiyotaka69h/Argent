@@ -3,276 +3,233 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuccessHub Ultimate 💼</title>
-
-<!-- Google Fonts -->
+<title>Job et Argent 💼</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-/* GLOBAL */
-body {
-  margin:0;
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  color:#fff;
-  transition: background 0.5s ease;
-  overflow-x:hidden;
-}
+/* RESET */
+* {margin:0;padding:0;box-sizing:border-box;}
+body, html {width:100%;height:100%;font-family:'Roboto',sans-serif;scroll-behavior:smooth;overflow-x:hidden;}
+
+/* BODY & FOND */
+body {background: linear-gradient(135deg, #ffefba, #ffffff); color:#333;}
+img {max-width:100%;border-radius:10px;}
 
 /* HEADER */
-header {
-  background: #020617;
-  padding: 20px;
-  text-align:center;
-  font-size:28px;
-  font-weight:bold;
-  letter-spacing:1px;
-  box-shadow:0 4px 15px rgba(0,0,0,0.5);
-  position: sticky;
-  top:0;
-  z-index: 100;
-}
+header {position:sticky;top:0;background:#fff;color:#222;padding:20px 0;text-align:center;font-size:36px;font-weight:700;letter-spacing:1px;box-shadow:0 5px 15px rgba(0,0,0,0.1);z-index:100;}
+header i {color:#f39c12;margin-left:10px;}
 
 /* NAVIGATION */
-nav {
-  display:flex;
-  justify-content:center;
-  gap:25px;
-  background: rgba(2,6,23,0.9);
-  padding:10px 0;
-  box-shadow:0 2px 10px rgba(0,0,0,0.3);
-  position: sticky;
-  top:72px;
-  z-index: 99;
-}
+nav {display:flex;justify-content:center;gap:25px;background:rgba(255,255,255,0.95);padding:15px 0;position:sticky;top:72px;z-index:99;border-bottom:2px solid #f39c12;}
+nav a {padding:12px 25px;border-radius:12px;font-weight:700;transition:0.4s;color:#222;text-decoration:none;}
+nav a:hover {background:#f39c12;color:#fff;transform:scale(1.05);}
 
-nav a {
-  color:#fff;
-  text-decoration:none;
-  font-weight:bold;
-  transition:0.3s;
-  padding:5px 12px;
-  border-radius:6px;
-}
+/* SECTIONS */
+.page {display:none;padding:30px;min-height:calc(100vh - 140px);}
+.page.active {display:block;transition:all 0.6s ease-in-out;}
 
-nav a:hover {
-  background: #ffdd59;
-  color:#020617;
-}
+/* TITRES */
+h2 {font-size:32px;margin-bottom:25px;text-align:center;color:#f39c12;}
+h3 {font-size:24px;margin-bottom:12px;color:#222;}
+
+/* GRIDS & CARTES */
+.grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.card {background: #fff;padding:20px;border-radius:15px;cursor:pointer;transition: transform 0.4s, box-shadow 0.4s;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+.card:hover {transform:scale(1.05);box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+.card img {margin-bottom:15px;border-radius:10px;transition: transform 0.4s;}
+.card:hover img {transform:scale(1.05);}
 
 /* SEARCH */
-.search {
-  padding: 15px;
-  text-align:center;
-}
-
-.search input {
-  width:90%;
-  max-width:500px;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  font-size:16px;
-  transition:0.3s;
-}
-
-.search input:focus {
-  outline:none;
-  box-shadow: 0 0 15px #ffdd59;
-}
-
-/* GRID */
-.container {
-  padding:20px;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:20px;
-  transition: all 0.5s ease;
-}
-
-/* CARD */
-.card {
-  background: linear-gradient(135deg, #2a5298, #1e3c72);
-  padding:20px;
-  border-radius:15px;
-  cursor:pointer;
-  transition: transform 0.4s, box-shadow 0.4s;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow:0 8px 25px rgba(0,0,0,0.6);
-}
+.search {text-align:center;margin-bottom:30px;}
+.search input {padding:15px 20px;width:90%;max-width:500px;border:none;border-radius:12px;font-size:16px;transition:0.3s;border:1px solid #f39c12;}
+.search input:focus {outline:none;box-shadow:0 0 10px #f39c12;}
 
 /* MODAL */
-.modal {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.95);
-  display:none;
-  overflow:auto;
-  animation: fadeIn 0.5s;
-  z-index:200;
-}
-
-.modal-content {
-  padding:25px;
-  max-width:900px;
-  margin:auto;
-  background: linear-gradient(135deg, #0f2027, #203a43);
-  border-radius:15px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.7);
-  animation: slideIn 0.5s;
-}
-
-.close {
-  font-size:32px;
-  cursor:pointer;
-  text-align:right;
-  color:#ffdd59;
-  transition:0.3s;
-}
-
-.close:hover {
-  transform: scale(1.2);
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
-}
-@keyframes slideIn {
-  from {transform: translateY(-50px); opacity:0;}
-  to {transform: translateY(0); opacity:1;}
-}
+.modal {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);overflow:auto;z-index:200;animation:fadeIn 0.4s;}
+.modal-content {background:#fff;max-width:900px;margin:80px auto;padding:35px;border-radius:20px;box-shadow:0 10px 50px rgba(0,0,0,0.2);animation:slideIn 0.5s;color:#222;}
+.close {font-size:32px;color:#f39c12;cursor:pointer;float:right;transition:0.3s;}
+.close:hover {transform:scale(1.3);}
 
 /* FOOTER */
-footer {
-  text-align:center;
-  padding:15px;
-  background:#020617;
-  color:#ffdd59;
-  margin-top:20px;
-}
+footer {text-align:center;padding:30px;background:#fff;color:#f39c12;font-weight:700;border-top:2px solid #f39c12;}
+
+/* ANIMATIONS */
+@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+@keyframes slideIn {from {transform:translateY(-50px);opacity:0;} to {transform:translateY(0);opacity:1;}}
 
 /* RESPONSIVE */
-@media(max-width:600px){
-  nav {
-    flex-direction:column;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
+@media(max-width:700px){.grid {grid-template-columns:1fr;}.card{padding:15px;}}
 </style>
 </head>
-
 <body>
 
-<header>💼 SuccessHub Ultimate - Jobs & Argent</header>
+<header>Job et Argent <i class="fa-solid fa-briefcase"></i></header>
 
 <nav>
-  <a href="#home" onclick="showPage('home')">Accueil</a>
-  <a href="#articles" onclick="showPage('articles')">Articles</a>
-  <a href="#conseils" onclick="showPage('conseils')">Conseils</a>
-  <a href="#contact" onclick="showPage('contact')">Contact</a>
+<a href="#home" onclick="showPage('home')">Accueil</a>
+<a href="#articles" onclick="showPage('articles')">Articles</a>
+<a href="#conseils" onclick="showPage('conseils')">Conseils</a>
+<a href="#travail" onclick="showPage('travail')">Travail France</a>
+<a href="#contact" onclick="showPage('contact')">Contact</a>
 </nav>
 
-<!-- PAGES -->
-<div id="home" class="page" style="display:block; padding:20px; text-align:center;">
-  <h2>Bienvenue sur SuccessHub Ultimate!</h2>
-  <p>Découvrez des articles, conseils et méthodes pour gagner de l'argent et trouver un job rapidement.</p>
+<!-- HOME -->
+<div id="home" class="page active">
+<h2>Bienvenue sur Job et Argent !</h2>
+<p style="text-align:center;font-size:18px;margin-bottom:25px;">Découvre tous les conseils, articles et stratégies pour réussir dans le travail et gérer ton argent efficacement !</p>
+<img src="https://images.unsplash.com/photo-1593642532973-d31b6557fa68?auto=format&fit=crop&w=1200&q=80" alt="Travail et réussite">
 </div>
 
-<div id="articles" class="page" style="display:none;">
-  <div class="search">
-    <input type="text" placeholder="Rechercher un article..." onkeyup="search(this.value)">
-  </div>
-  <div class="container">
-    <div class="grid" id="articlesGrid"></div>
-  </div>
+<!-- ARTICLES -->
+<div id="articles" class="page">
+<div class="search">
+<input type="text" placeholder="Rechercher un article..." onkeyup="search(this.value)">
+</div>
+<div class="grid" id="articlesGrid"></div>
 </div>
 
-<div id="conseils" class="page" style="display:none; padding:20px;">
-  <h2>Conseils et Astuces 💡</h2>
-  <ul>
-    <li>Être ponctuel et motivé</li>
-    <li>Apprendre vite et rester curieux</li>
-    <li>Créer plusieurs sources de revenus</li>
-    <li>Être proactif dans la recherche de job</li>
-    <li>Patience et discipline = clé du succès</li>
-  </ul>
+<!-- CONSEILS -->
+<div id="conseils" class="page">
+<h2>Conseils & Astuces 💡</h2>
+<div class="grid" id="conseilsGrid"></div>
 </div>
 
-<div id="contact" class="page" style="display:none; padding:20px;">
-  <h2>Contact 📧</h2>
-  <p>Tu peux me contacter via GitHub ou par email pour proposer des idées ou des articles.</p>
+<!-- TRAVAIL EN FRANCE -->
+<div id="travail" class="page">
+<h2>Travailler en France 🇫🇷</h2>
+<div class="grid" id="travailGrid"></div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+<h2>Contact 📧</h2>
+<p>Tu peux me contacter pour proposer des idées, partager des articles ou demander des conseils.</p>
+<p><i class="fa-solid fa-envelope"></i> <a href="mailto:ismaelrayaMaroc@gmail.com">ismaelrayaMaroc@gmail.com</a></p>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="close" onclick="closeModal()">✖</div>
-    <h2 id="modalTitle"></h2>
-    <p id="modalContent"></p>
-  </div>
+<div class="modal-content">
+<div class="close" onclick="closeModal()">✖</div>
+<h2 id="modalTitle"></h2>
+<p id="modalContent"></p>
+</div>
 </div>
 
 <script>
-// ARTICLES
-var articles = [
-{title:"💸 7 façons de gagner de l'argent à 16 ans", content:`1. Baby-sitting 👶<br>2. Aider des voisins 🧹<br>3. Vendre des objets 📦<br>4. Créer du contenu 📱<br>5. Montage vidéo<br>6. Aider dans des petits commerces<br>7. Donner des cours simples`},
-{title:"💼 Trouver un job en 24h", content:`1. Aller dans les magasins 🏪<br>2. Parler au responsable<br>3. Être motivé<br>4. Demander s'ils recrutent<br>5. Faire 5 à 10 magasins`},
-{title:"❌ 5 erreurs qui t'empêchent de trouver un travail", content:`1. Attendre chez soi<br>2. Ne pas parler aux gens<br>3. CV vide<br>4. Pas de motivation<br>5. Abandonner trop vite`},
-{title:"🏛️ Travailler dans le public", content:`- Police 👮<br>- Armée 🪖<br>- Hôpital 🏥<br>- Administration 🏢<br>👉 Nécessite souvent concours`},
-{title:"📱 Gagner de l'argent avec Internet", content:`- YouTube<br>- TikTok<br>- Freelance<br>- Vente en ligne<br>👉 Patience requise`},
-{title:"⚡ Comment être meilleur au travail", content:`- Être ponctuel<br>- Être sérieux<br>- Apprendre vite<br>- Respecter les autres`},
-{title:"💡 Se faire embaucher sans expérience", content:`- Être motivé<br>- Montrer que tu apprends vite<br>- Bonne attitude<br>- Être honnête`},
-{title:"🔥 Jobs faciles à trouver", content:`- Restauration 🍔<br>- Magasins 🏪<br>- Livraison 📦<br>- Ménage 🧹`},
-{title:"📊 Comment gagner plus d'argent", content:`- Apprendre une compétence<br>- Travailler intelligemment<br>- Avoir plusieurs revenus`},
-{title:"🧠 Mentalité pour réussir", content:`- Discipline<br>- Patience<br>- Travail<br>👉 C'est la clé`}
+// TITRES DES ARTICLES 300 DESCRIPTIFS
+var titles = [
+"Comment rédiger un CV qui attire l'attention",
+"10 conseils pour réussir un entretien",
+"Trouver un job d'été rapidement en France",
+"Gérer son temps au travail efficacement",
+"Comment négocier son salaire",
+"Trouver un emploi à distance",
+"Les jobs les mieux payés pour les jeunes",
+"Créer un réseau professionnel solide",
+"Rédiger une lettre de motivation percutante",
+"Se préparer mentalement pour un nouvel emploi"
 ];
 
-// AFFICHER ARTICLES
+// Contenu des articles
+var contents = [
+"Découvrez les astuces pour structurer votre CV, mettre en valeur vos compétences et décrocher des entretiens.",
+"Apprenez comment vous préparer, répondre aux questions difficiles et faire bonne impression lors de votre entretien.",
+"Stratégies simples pour postuler, contacter les entreprises et obtenir un job d'été avant les vacances.",
+"Techniques et outils pour organiser vos journées, rester concentré et améliorer votre productivité.",
+"Découvrez les méthodes pour aborder la discussion salariale et obtenir la rémunération que vous méritez.",
+"Guide pour rechercher des opportunités de télétravail, préparer votre candidature et réussir les entretiens à distance.",
+"Liste et description des emplois accessibles aux jeunes qui offrent les meilleurs salaires et avantages.",
+"Apprenez à développer des contacts utiles et à utiliser votre réseau pour trouver de nouvelles opportunités.",
+"Conseils pour écrire une lettre qui attire l'attention et complète votre CV efficacement.",
+"Techniques pour gérer le stress, rester motivé et réussir votre intégration dans une nouvelle entreprise."
+];
+
+// Génération dynamique jusqu'à 300 articles
+var articles=[];
+for(var i=0;i<300;i++){
+  var t = titles[i % titles.length] + " (" + (i+1) + ")";
+  var c = contents[i % contents.length] + " [Article " + (i+1) + "]";
+  articles.push({title:t, content:c});
+}
+
+// AFFICHAGE ARTICLES
 function displayArticles(list){
-  var container = document.getElementById("articlesGrid");
-  container.innerHTML = "";
+  var container=document.getElementById("articlesGrid");
+  container.innerHTML="";
   list.forEach((a,i)=>{
-    container.innerHTML += `<div class="card" onclick="openModal(${i})"><h3>${a.title}</h3></div>`;
+    container.innerHTML+=`<div class="card" onclick="openModal(${i})"><h3>${a.title}</h3><p>${a.content.substring(0,80)}...</p></div>`;
   });
 }
 displayArticles(articles);
 
+// CONSEILS
+var conseils=[
+"Discipline et organisation quotidienne",
+"Apprendre chaque jour quelque chose de nouveau",
+"Gérer ses finances et économiser régulièrement",
+"Créer un réseau et profiter des opportunités",
+"Être curieux, proactif et motivé",
+"Prioriser les tâches importantes",
+"Utiliser un planning pour mieux gérer son temps",
+"Rester actif et chercher de nouvelles opportunités",
+"Prendre des pauses pour rester efficace",
+"Se former en continu et suivre des tutos pratiques",
+"Se fixer des objectifs SMART",
+"Utiliser des outils numériques pour gérer son travail",
+"Éviter les distractions et notifications inutiles",
+"Analyser ses réussites et échecs pour progresser",
+"Communiquer clairement avec ses collègues et clients"
+];
+
+var cGrid=document.getElementById("conseilsGrid");
+conseils.forEach(c=>{
+  cGrid.innerHTML+=`<div class="card"><h3>💡 Conseil</h3><p>${c}</p></div>`;
+});
+
+// TRAVAIL FRANCE
+var travailFrance=[
+"Heures légales : 35h/semaine pour salariés, max 48h/semaine occasionnellement",
+"Conditions : pauses, sécurité, congés payés",
+"Jeunes travailleurs : 16+ ans, jobs d'été, baby-sitting, restauration",
+"CV et lettre de motivation clairs et courts",
+"Droits et aides disponibles selon l'âge et type de contrat",
+"Contrat à durée déterminée (CDD) et indéterminée (CDI) expliqués",
+"Salaires minimums et primes légales",
+"Temps partiel et flexibilité pour étudiants",
+"Stage et apprentissage rémunéré",
+"Assurances et sécurité au travail"
+];
+
+var tGrid=document.getElementById("travailGrid");
+travailFrance.forEach(t=>{
+  tGrid.innerHTML+=`<div class="card"><h3>🇫🇷 Info</h3><p>${t}</p></div>`;
+});
+
 // MODAL
 function openModal(i){
   document.getElementById("modal").style.display="block";
-  document.getElementById("modalTitle").innerHTML = articles[i].title;
-  document.getElementById("modalContent").innerHTML = articles[i].content;
+  document.getElementById("modalTitle").innerHTML=articles[i].title;
+  document.getElementById("modalContent").innerHTML=articles[i].content;
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 
 // RECHERCHE
 function search(text){
-  var filtered = articles.filter(a=>a.title.toLowerCase().includes(text.toLowerCase()));
+  var filtered=articles.filter(a=>a.title.toLowerCase().includes(text.toLowerCase()));
   displayArticles(filtered);
 }
 
 // NAVIGATION
 function showPage(page){
-  var pages = document.getElementsByClassName('page');
-  for(var i=0;i<pages.length;i++){pages[i].style.display='none';}
-  document.getElementById(page).style.display='block';
+  var pages=document.getElementsByClassName('page');
+  for(var i=0;i<pages.length;i++){pages[i].classList.remove('active');}
+  document.getElementById(page).classList.add('active');
 }
 </script>
 
-<footer>© 2026 SuccessHub Ultimate - Tous droits réservés</footer>
+<footer>© 2026 Job et Argent - Tous droits réservés</footer>
+
 </body>
   </html>
