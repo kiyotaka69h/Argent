@@ -84,7 +84,7 @@ footer {text-align:center;padding:30px;background:#fff;color:#f39c12;font-weight
 <!-- ARTICLES -->
 <div id="articles" class="page">
 <div class="search">
-<input type="text" placeholder="Rechercher un article..." onkeyup="search(this.value)">
+<input type="text" placeholder="Rechercher un article..." onkeyup="searchArticles(this.value)">
 </div>
 <div class="grid" id="articlesGrid"></div>
 </div>
@@ -118,7 +118,7 @@ footer {text-align:center;padding:30px;background:#fff;color:#f39c12;font-weight
 </div>
 
 <script>
-// TITRES DES ARTICLES 300 DESCRIPTIFS
+// ARTICLES
 var titles = [
 "Comment rédiger un CV qui attire l'attention",
 "10 conseils pour réussir un entretien",
@@ -132,7 +132,6 @@ var titles = [
 "Se préparer mentalement pour un nouvel emploi"
 ];
 
-// Contenu des articles
 var contents = [
 "Découvrez les astuces pour structurer votre CV, mettre en valeur vos compétences et décrocher des entretiens.",
 "Apprenez comment vous préparer, répondre aux questions difficiles et faire bonne impression lors de votre entretien.",
@@ -147,25 +146,15 @@ var contents = [
 ];
 
 // Génération dynamique jusqu'à 300 articles
-var articles=[];
+var articles = [];
 for(var i=0;i<300;i++){
   var t = titles[i % titles.length] + " (" + (i+1) + ")";
   var c = contents[i % contents.length] + " [Article " + (i+1) + "]";
   articles.push({title:t, content:c});
 }
 
-// AFFICHAGE ARTICLES
-function displayArticles(list){
-  var container=document.getElementById("articlesGrid");
-  container.innerHTML="";
-  list.forEach((a,i)=>{
-    container.innerHTML+=`<div class="card" onclick="openModal(${i})"><h3>${a.title}</h3><p>${a.content.substring(0,80)}...</p></div>`;
-  });
-}
-displayArticles(articles);
-
 // CONSEILS
-var conseils=[
+var conseilsList = [
 "Discipline et organisation quotidienne",
 "Apprendre chaque jour quelque chose de nouveau",
 "Gérer ses finances et économiser régulièrement",
@@ -183,13 +172,8 @@ var conseils=[
 "Communiquer clairement avec ses collègues et clients"
 ];
 
-var cGrid=document.getElementById("conseilsGrid");
-conseils.forEach(c=>{
-  cGrid.innerHTML+=`<div class="card"><h3>💡 Conseil</h3><p>${c}</p></div>`;
-});
-
 // TRAVAIL FRANCE
-var travailFrance=[
+var travailList = [
 "Heures légales : 35h/semaine pour salariés, max 48h/semaine occasionnellement",
 "Conditions : pauses, sécurité, congés payés",
 "Jeunes travailleurs : 16+ ans, jobs d'été, baby-sitting, restauration",
@@ -202,28 +186,42 @@ var travailFrance=[
 "Assurances et sécurité au travail"
 ];
 
-var tGrid=document.getElementById("travailGrid");
-travailFrance.forEach(t=>{
-  tGrid.innerHTML+=`<div class="card"><h3>🇫🇷 Info</h3><p>${t}</p></div>`;
-});
+// Convertir conseils et travail France en objets interactifs
+var conseilsObj = conseilsList.map((c,i)=>{return {title:"💡 Conseil "+(i+1), content:c};});
+var travailObj = travailList.map((t,i)=>{return {title:"🇫🇷 Info "+(i+1), content:t};});
 
-// MODAL
-function openModal(i){
+// FONCTION AFFICHAGE GRID
+function displayGrid(list,id){
+  var container = document.getElementById(id);
+  container.innerHTML = "";
+  list.forEach((item,i)=>{
+    container.innerHTML += `<div class="card" onclick="openModalContent(${i},'${id}')"><h3>${item.title}</h3><p>${item.content.substring(0,80)}...</p></div>`;
+  });
+}
+
+// AFFICHAGE INITIAL
+displayGrid(articles,"articlesGrid");
+displayGrid(conseilsObj,"conseilsGrid");
+displayGrid(travailObj,"travailGrid");
+
+// MODAL DYNAMIQUE
+function openModalContent(i,id){
   document.getElementById("modal").style.display="block";
-  document.getElementById("modalTitle").innerHTML=articles[i].title;
-  document.getElementById("modalContent").innerHTML=articles[i].content;
+  if(id=="articlesGrid") {document.getElementById("modalTitle").innerHTML = articles[i].title; document.getElementById("modalContent").innerHTML = articles[i].content;}
+  else if(id=="conseilsGrid") {document.getElementById("modalTitle").innerHTML = conseilsObj[i].title; document.getElementById("modalContent").innerHTML = conseilsObj[i].content;}
+  else if(id=="travailGrid") {document.getElementById("modalTitle").innerHTML = travailObj[i].title; document.getElementById("modalContent").innerHTML = travailObj[i].content;}
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 
-// RECHERCHE
-function search(text){
-  var filtered=articles.filter(a=>a.title.toLowerCase().includes(text.toLowerCase()));
-  displayArticles(filtered);
+// RECHERCHE ARTICLES
+function searchArticles(text){
+  var filtered = articles.filter(a=>a.title.toLowerCase().includes(text.toLowerCase()));
+  displayGrid(filtered,"articlesGrid");
 }
 
 // NAVIGATION
 function showPage(page){
-  var pages=document.getElementsByClassName('page');
+  var pages = document.getElementsByClassName('page');
   for(var i=0;i<pages.length;i++){pages[i].classList.remove('active');}
   document.getElementById(page).classList.add('active');
 }
@@ -232,4 +230,4 @@ function showPage(page){
 <footer>© 2026 Job et Argent - Tous droits réservés</footer>
 
 </body>
-  </html>
+</html>
