@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuccessHub 💼</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+}
+
+/* HEADER */
+header {
+  background:#020617;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* SEARCH */
+.search {
+  padding:10px;
+  text-align:center;
+}
+
+.search input {
+  width:90%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+}
+
+/* GRID */
+.container {
+  padding:15px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:15px;
+}
+
+/* CARD */
+.card {
+  background:#1e293b;
+  padding:15px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.03);
+}
+
+/* MODAL */
+.modal {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  overflow:auto;
+}
+
+.modal-content {
+  padding:20px;
+  max-width:800px;
+  margin:auto;
+}
+
+.close {
+  font-size:30px;
+  cursor:pointer;
+  text-align:right;
+}
+</style>
+</head>
+
+<body>
+
+<header>💼 SuccessHub - Gagner & Travailler</header>
+
+<div class="search">
+  <input type="text" placeholder="Rechercher..." onkeyup="search(this.value)">
+</div>
+
+<div class="container">
+  <div class="grid" id="articles"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal()">✖</div>
+    <h2 id="title"></h2>
+    <p id="content"></p>
+  </div>
+</div>
+
+<script>
+
+// ARTICLES (tu peux en ajouter facilement)
+var data = [
+
+{
+title:"💸 7 façons de gagner de l'argent à 16 ans",
+content:`1. Baby-sitting 👶  
+2. Aider des voisins 🧹  
+3. Vendre des objets 📦  
+4. Créer du contenu 📱  
+5. Faire du montage vidéo  
+6. Aider dans des petits commerces  
+7. Donner des cours simples`
+},
+
+{
+title:"💼 Trouver un job en 24h (méthode)",
+content:`1. Va DIRECT dans les magasins  
+2. Parle au responsable  
+3. Sois poli et motivé  
+4. Demande s'ils recrutent  
+5. Fais 5 à 10 magasins dans la journée`
+},
+
+{
+title:"❌ 5 erreurs qui t'empêchent de trouver un travail",
+content:`1. Attendre chez toi  
+2. Ne pas parler aux gens  
+3. CV vide ou mal fait  
+4. Pas de motivation  
+5. Abandonner trop vite`
+},
+
+{
+title:"🏛️ Travailler dans le public",
+content:`- Police 👮  
+- Armée 🪖  
+- Hôpital 🏥  
+- Administration 🏢  
+👉 Nécessite souvent concours`
+},
+
+{
+title:"📱 Gagner de l'argent avec internet",
+content:`- YouTube  
+- TikTok  
+- Freelance  
+- Vente en ligne  
+👉 Demande patience`
+},
+
+{
+title:"⚡ Comment être meilleur au travail",
+content:`- Être ponctuel  
+- Être sérieux  
+- Apprendre vite  
+- Respecter les autres  
+👉 Ça te rend précieux`
+},
+
+{
+title:"💡 Comment se faire embaucher sans expérience",
+content:`- Être motivé  
+- Montrer que tu apprends vite  
+- Avoir une bonne attitude  
+- Être honnête`
+},
+
+{
+title:"🔥 Les jobs les plus faciles à trouver",
+content:`- Restauration 🍔  
+- Magasins 🏪  
+- Livraison 📦  
+- Ménage 🧹`
+},
+
+{
+title:"📊 Comment gagner plus d'argent",
+content:`- Apprendre une compétence  
+- Travailler plus intelligemment  
+- Avoir plusieurs revenus`
+},
+
+{
+title:"🧠 Mentalité pour réussir",
+content:`- Discipline  
+- Patience  
+- Travail  
+👉 C'est la clé`
+}
+
+];
+
+// AFFICHER ARTICLES
+function display(list){
+  var container = document.getElementById("articles");
+  container.innerHTML = "";
+
+  list.forEach((a,i)=>{
+    container.innerHTML += `
+      <div class="card" onclick="openArticle(${i})">
+        <h3>${a.title}</h3>
+      </div>
+    `;
+  });
+}
+
+display(data);
+
+// OUVRIR ARTICLE
+function openArticle(i){
+  document.getElementById("modal").style.display = "block";
+  document.getElementById("title").innerText = data[i].title;
+  document.getElementById("content").innerText = data[i].content;
+}
+
+// FERMER
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+// SEARCH
+function search(text){
+  var filtered = data.filter(a =>
+    a.title.toLowerCase().includes(text.toLowerCase())
+  );
+  display(filtered);
+}
+
+</script>
+
+</body>
+  </html>
